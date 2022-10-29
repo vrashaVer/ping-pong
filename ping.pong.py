@@ -35,8 +35,8 @@ class Ball(GameSprite):
 
     def __init__(self,photo,rect_x,rect_y,speed,weight,height):
         super().__init__(photo,rect_x,rect_y,speed,weight,height)
-        self.speed_x = 5
-        self.speed_y = 5
+        self.speed_x = speed
+        self.speed_y = speed
 
     def update_ball(self):
     
@@ -48,6 +48,13 @@ class Ball(GameSprite):
             self.speed_x *= -1
         if sprite.collide_rect(racket_1,ball) or sprite.collide_rect(racket_2,ball):
             self.speed_x *= -1
+    def set_to_start(self):
+
+        ball.rect.x , ball.rect.y = 350,250
+        racket_1.x , racket_1.y = 0, 0
+        racket_2.x , racket_2.y = 650, 0
+    
+
 class MenuButton(sprite.Sprite):
     def __init__(self,photo,rect_x,rect_y,weight,height): 
         super().__init__()
@@ -68,9 +75,9 @@ class MenuButton(sprite.Sprite):
 
 
 
-racket_2 = Racket('rackk.png',650,0,5,50,150)
-racket_1 = Racket('rackk.png',0,0,5,50,150)
-ball = Ball('balls.png',100,100,2,50,40)
+racket_2 = Racket('rackk.png',650,0,7,50,150)
+racket_1 = Racket('rackk.png',0,0,7,50,150)
+ball = Ball('balls.png',350,400,10,50,40)
 play_button = MenuButton('play.png',240,100,250,70)
 replay_button = MenuButton('replay.png',240,220,250,70)
 exit_button = MenuButton('exit.png',240,340,250,70)
@@ -97,10 +104,10 @@ while game:
             if play_button.collidepoint(x,y):
                 finish = False
             if replay_button.collidepoint(x,y):
-                ball.rect.x , ball.rect.y = 100,100
-                racket_1.x , racket_1.y = 0, 0
-                racket_2.x , racket_2.y = 650, 0
+                ball.set_to_start()
+                team1 , team2 = 0,0
                 finish = False
+
             if exit_button.collidepoint(x,y):
                 game = False
         if i.type == KEYDOWN:
